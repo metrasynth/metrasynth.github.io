@@ -53,6 +53,30 @@
 <a class="reference external" href="https://docs.python.org/3.5/library/ctypes.html#module-ctypes" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> module
 to provide access to all of the SunVox functions described
 in the <code class="file docutils literal"><span class="pre">sunvox.h</span></code> header file.</p>
+<p class="plantuml">
+<object data="../_images/plantuml-5048df542c217f6a8d15643249c2246546f6cdcd.svg" type="image/svg+xml" style="width:503px;height:492px;">
+<img src="../_images/plantuml-5048df542c217f6a8d15643249c2246546f6cdcd.png" alt="&#64;startuml
+rectangle &quot;Python Interpreter&quot; as python {
+    rectangle &quot;&lt;your_app&gt;&quot; as app
+    rectangle &quot;sunvox\nmodule&quot; as sunvox
+    rectangle &quot;ctypes\nmodule&quot; as ctypes
+}
+rectangle &quot;SunVox DLL&quot; as dll
+rectangle &quot;SunVox file&quot; as file1
+rectangle &quot;SunVox file&quot; as file2
+rectangle &quot;Audio out\n(hardware)&quot; as audio
+rectangle &quot;Audio out\n(byte stream)&quot; as stream
+file2 -&gt; app : &quot;files can be loaded\nusing byte strings&quot;
+app &lt;-left-&gt; sunvox
+sunvox &lt;-left-&gt; ctypes
+ctypes &lt;-&gt; dll
+file1 -up-&gt; dll : &quot;files can be\nloaded directly&quot;
+dll -&gt; audio : &quot;SunVox can output\naudio directly&quot;
+app -&gt; audio : &quot;Audio can also be\nread from a buffer&quot;
+app -&gt; stream
+&#64;enduml" />
+
+</object></p>
 </div>
 </div>
 

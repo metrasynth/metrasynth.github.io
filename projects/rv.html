@@ -49,6 +49,24 @@
 </dl>
 <div class="section" id="create-modify-read-and-write-sunvox-files">
 <h2>Create, modify, read, and write SunVox files<a class="headerlink" href="#create-modify-read-and-write-sunvox-files" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<object data="../_images/plantuml-b44cd57d4126723a4eb5b5336e664dd0fd9c2629.svg" type="image/svg+xml" style="width:186px;height:370px;">
+<img src="../_images/plantuml-b44cd57d4126723a4eb5b5336e664dd0fd9c2629.png" alt="&#64;startuml
+rectangle &quot;Python Interpreter&quot; as python {
+    rectangle &quot;&lt;your_app&gt;&quot; as app {
+        rectangle &quot;rv object\nmodel&quot; as obj
+    }
+    rectangle &quot;rv&quot; as rv
+    rectangle &quot;chunk&quot; as chunk
+}
+rectangle &quot;SunVox file\nor buffer&quot; as file
+file -&gt; chunk
+chunk -&gt; rv
+rv &lt;-left-&gt; obj
+rv -&gt; file
+&#64;enduml" />
+
+</object></p>
 </div>
 <div class="section" id="data-structures">
 <h2>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
