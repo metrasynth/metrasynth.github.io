@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metrasynth 0.0 documentation" href="../index.html" />
     <link rel="up" title="Projects" href="index.html" />
-    <link rel="next" title="VoxPlex" href="voxplex.html" />
+    <link rel="next" title="sunvox-dll-python (sunvox)" href="sunvox-dll-python.html" />
     <link rel="prev" title="Projects" href="index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -47,69 +47,39 @@
 <dt><strong>Github</strong></dt>
 <dd><a class="reference external" href="https://github.com/metrasynth/radiant-voices">https://github.com/metrasynth/radiant-voices</a></dd>
 </dl>
-<div class="section" id="python-interface-to-sunvox-dll">
-<h2>Python interface to SunVox DLL<a class="headerlink" href="#python-interface-to-sunvox-dll" title="Permalink to this headline">¶</a></h2>
-<p><code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> makes use of Python&#8217;s <a class="reference external" href="https://docs.python.org/3.5/library/ctypes.html#module-ctypes" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> module
-to provide access to all of the SunVox functions described
-in the <code class="file docutils literal"><span class="pre">sunvox.h</span></code> header file.</p>
-<p class="plantuml">
-<object data="../_images/plantuml-06f000ecc8302e696ff518e2d16274a69f5e5242.svg" type="image/svg+xml" style="width:499px;height:475px;">
-<img src="../_images/plantuml-06f000ecc8302e696ff518e2d16274a69f5e5242.png" alt="&#64;startuml
-rectangle &quot;Python Interpreter&quot; as python {
-    rectangle &quot;&lt;your_app&gt;&quot; as app
-    rectangle &quot;rv&quot; as rv
-    rectangle &quot;ctypes&quot; as ctypes
-}
-rectangle &quot;SunVox DLL&quot; as dll
-rectangle &quot;SunVox file&quot; as file1
-rectangle &quot;SunVox file&quot; as file2
-rectangle &quot;Audio out\n(hardware)&quot; as audio
-rectangle &quot;Audio out\n(byte stream)&quot; as stream
-file2 -&gt; app : &quot;files can be loaded\nusing byte strings&quot;
-app &lt;-left-&gt; rv
-rv &lt;-left-&gt; ctypes
-ctypes &lt;-&gt; dll
-file1 -up-&gt; dll : &quot;files can be\nloaded directly&quot;
-dll -&gt; audio : &quot;SunVox can output\naudio directly&quot;
-app -&gt; audio : &quot;Audio can also be\nread from a buffer&quot;
-app -&gt; stream
-&#64;enduml" />
-
-</object></p>
+<div class="section" id="create-modify-read-and-write-sunvox-files">
+<h2>Create, modify, read, and write SunVox files<a class="headerlink" href="#create-modify-read-and-write-sunvox-files" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="python-interface-to-sunvox-file-format">
-<h2>Python interface to SunVox file format<a class="headerlink" href="#python-interface-to-sunvox-file-format" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-structures">
+<h2>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<p><code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> aims to provide:</p>
+<ul class="simple">
+<li>A set of data structures covering 100% of the SunVox file format.</li>
+<li>Functional and object-oriented ways of creating and manipulating
+those structures.</li>
+</ul>
+</div>
+<div class="section" id="read-sunvox-files">
+<h2>Read SunVox files<a class="headerlink" href="#read-sunvox-files" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">.sunvox</span></code> and <code class="docutils literal"><span class="pre">.sunsynth</span></code> file formats follow the
-<a class="reference external" href="https://en.wikipedia.org/wiki/Interchange_File_Format">IFF</a> container format. Python&#8217;s <a class="reference external" href="https://docs.python.org/3.5/library/chunk.html#module-chunk" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">chunk</span></code></a> module
-handles reading and writing that format, and <code class="xref py py-mod docutils literal"><span class="pre">rv</span></code>
-provides a <em>SunVox file reader</em>, a <em>SunVox file writer</em> <a class="footnote-reference" href="#id3" id="id1">[1]</a>,
-and a <em>SunVox object model</em>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<a class="reference external" href="https://en.wikipedia.org/wiki/Interchange_File_Format">IFF</a> container format.</p>
+<p><code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> leverages Python&#8217;s <a class="reference external" href="https://docs.python.org/3.5/library/chunk.html#module-chunk" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">chunk</span></code></a> to read that format
+and translate it to in-memory data structures.</p>
+</div>
+<div class="section" id="write-sunvox-files">
+<h2>Write SunVox files<a class="headerlink" href="#write-sunvox-files" title="Permalink to this headline">¶</a></h2>
+<p>Once structures are ready to play, <code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> will allow writing
+to a file or buffer using the <code class="docutils literal"><span class="pre">.sunvox</span></code> or <code class="docutils literal"><span class="pre">.sunsynth</span></code> format. <a class="footnote-reference" href="#id3" id="id1">[1]</a></p>
+</div>
+<div class="section" id="document-the-sunvox-file-format">
+<h2>Document the SunVox file format<a class="headerlink" href="#document-the-sunvox-file-format" title="Permalink to this headline">¶</a></h2>
+<p>There is currently no official documentation regarding the SunVox
+file format <a class="footnote-reference" href="#id4" id="id2">[2]</a>.</p>
+<p>Until such time there is, <code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> intends to
+serve as a <em>de facto</em> source of documentation about the format.</p>
 <p>The interpretation of SunVox file formats is based on &#8220;clean room&#8221;
 style inspection of what SunVox writes to disk when a file is edited
-a certain way.</p>
-<p class="last">There is currently no official documentation regarding the SunVox
-file format <a class="footnote-reference" href="#id4" id="id2">[2]</a>, but until such time there is, <code class="xref py py-mod docutils literal"><span class="pre">rv</span></code> intends to
-act as a <em>de facto</em> source of documentation about the format.</p>
-</div>
-<p class="plantuml">
-<object data="../_images/plantuml-1c26b5b7d02d23d673397cf9481dab25d5753c78.svg" type="image/svg+xml" style="width:283px;height:274px;">
-<img src="../_images/plantuml-1c26b5b7d02d23d673397cf9481dab25d5753c78.png" alt="&#64;startuml
-rectangle &quot;Python Interpreter&quot; as python {
-    rectangle &quot;&lt;your_app&gt;&quot; as app {
-        rectangle &quot;file object\nmodel&quot; as obj
-    }
-    rectangle &quot;rv&quot; as rv
-    rectangle &quot;chunk&quot; as chunk
-}
-rectangle &quot;SunVox file&quot; as file
-file &lt;-&gt; chunk
-chunk &lt;-&gt; rv
-rv &lt;-left-&gt; obj
-&#64;enduml" />
-
-</object></p>
+a specific way.</p>
 </div>
 <div class="section" id="footnotes">
 <h2>Footnotes<a class="headerlink" href="#footnotes" title="Permalink to this headline">¶</a></h2>
@@ -137,8 +107,11 @@ rv &lt;-left-&gt; obj
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Radiant Voices (<code class="docutils literal"><span class="pre">rv</span></code>)</a><ul>
-<li><a class="reference internal" href="#python-interface-to-sunvox-dll">Python interface to SunVox DLL</a></li>
-<li><a class="reference internal" href="#python-interface-to-sunvox-file-format">Python interface to SunVox file format</a></li>
+<li><a class="reference internal" href="#create-modify-read-and-write-sunvox-files">Create, modify, read, and write SunVox files</a></li>
+<li><a class="reference internal" href="#data-structures">Data structures</a></li>
+<li><a class="reference internal" href="#read-sunvox-files">Read SunVox files</a></li>
+<li><a class="reference internal" href="#write-sunvox-files">Write SunVox files</a></li>
+<li><a class="reference internal" href="#document-the-sunvox-file-format">Document the SunVox file format</a></li>
 <li><a class="reference internal" href="#footnotes">Footnotes</a></li>
 </ul>
 </li>
@@ -149,7 +122,7 @@ rv &lt;-left-&gt; obj
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">Projects</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Projects</a></li>
-      <li>Next: <a href="voxplex.html" title="next chapter">VoxPlex</a></li>
+      <li>Next: <a href="sunvox-dll-python.html" title="next chapter">sunvox-dll-python (<code class="docutils literal"><span class="pre">sunvox</span></code>)</a></li>
   </ul></li>
   </ul></li>
 </ul>
